@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!--
+Software License Agreement (BSD)
+
+\file      husky_empty_world.launch
+\authors   Paul Bovbel <pbovbel@clearpathrobotics.com, Devon Ash <dash@clearpathrobotics.com>
+\copyright Copyright (c) 2015, Clearpath Robotics, Inc., All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that
+the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the
+   following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+   following disclaimer in the documentation and/or other materials provided with the distribution.
+ * Neither the name of Clearpath Robotics nor the names of its contributors may be used to endorse or promote
+   products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WAR-
+RANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, IN-
+DIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<launch>
+    <!-- 3D Octomap -->
+    <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
+     <param name="resolution" value="0.05" />
+     <param name="frame_id" type="string" value="map" />
+     <param name="sensor_model/max_range" value="6" />
+     <param name="latch" value="false" />
+     <!-- <param name="occupancy_min_z" value="0.05" />
+     <param name="occupancy_max_z" value="0.5" /> -->
+     <remap from="cloud_in" to="/velodyne_points" />
+    </node>
+
+    <!-- <node pkg="rf2o_laser_odometry" type="rf2o_laser_odometry_node" name="rf2o_laser_odometry" output="screen">
+      <param name="laser_scan_topic" value="/scan"/>        # topic where the lidar scans are being published
+      <param name="odom_topic" value="/odom" />              # topic where tu publish the odometry estimations
+      
+      <param name="base_frame_id" value="base_link"/>            # frame_id (tf) of the mobile robot base. A tf transform from the laser_frame to the base_frame is mandatory
+      <param name="odom_frame_id" value="odom" />                # frame_id (tf) to publish the odometry estimations  
+      <param name="publish_tf" value="true" />                   # wheter or not to publish the tf::transform (base->odom)  
+      <param name="init_pose_from_topic" value="" /> # (Odom topic) Leave empty to start at point (0,0)
+      <param name="freq" value="10.0"/>                            # Execution frequency.
+      <param name="verbose" value="true" />                       # verbose
+    </node> -->
+
+    <!-- 2D Octomap -->
+    <node pkg="gmapping" type="slam_gmapping" name="simple_gmapping" output="screen"> 
+      <rosparam>
+          odom_frame: odom
+          base_frame: base_link
+          map_frame: map
+
+          map_update_interval: 0.5 #0.5 # Publish new map
+
+          maxUrange: 10.0 #19.9 #5.5 # Should be just less than sensor range
+          maxRange: 10.1 #20 #6.1 # Should be just greater than sensor range
+          particles: 100 # Increased from 80
+
+          # Update frequencies
+          linearUpdate: 0.3
+          angularUpdate: 0.5 #0.2 #0.5
+          temporalUpdate: 2.0 #1.0 #2.0
+          resampleThreshold: 0.5
+
+          # Initial Map Size
+          xmin: -100.0
+          ymin: -100.0
+          xmax: 100.0
+          ymax: 100.0
+          delta: 0.05
+
+          # All default
+          sigma: 0.05
+          kernelSize: 1
+          lstep: 0.05
+          astep: 0.05
+          iterations: 5
+          lsigma: 0.075
+          ogain: 3.0
+          lskip: 0
+          llsamplerange: 0.01
+          llsamplestep: 0.01
+          lasamplerange: 0.005
+          lasamplestep: 0.005
+
+        </rosparam>
+    </node>
+        
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find scout_description)/rviz/model_display.rviz" />
+</launch>
