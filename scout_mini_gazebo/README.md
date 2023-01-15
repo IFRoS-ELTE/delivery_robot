@@ -19,7 +19,7 @@ git clone https://github.com/issaiass/realsense_gazebo_plugin
 
 ### LiDAR
 ```
-git clone https://bitbucket.org/DataspeedInc/velodyne_simulator/src/master/
+git clone https://bitbucket.org/DataspeedInc/velodyne_simulator.git
 ```
 
 ### Point Cloud to Laser Scan
