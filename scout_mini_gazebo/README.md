@@ -12,17 +12,25 @@ Go through the official docs once and install dependencies. Remember to install 
 
 
 ### Camera
+```
 git clone https://github.com/issaiass/realsense2_description
 git clone https://github.com/issaiass/realsense_gazebo_plugin
+```
 
 ### LiDAR
+```
 git clone https://bitbucket.org/DataspeedInc/velodyne_simulator/src/master/
+```
 
 ### Point Cloud to Laser Scan
+```
 git clone https://github.com/Umar-Senpai/pointcloud_to_laserscan.git
+```
 
 ### RVIZ Navigation
+```
 git clone https://github.com/autolaborcenter/rviz_navi_multi_goals_pub_plugin.git
+```
 
 ## Usage
 Spawn the scout_mini in a gazebo world first:
