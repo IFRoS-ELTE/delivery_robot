@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+
 <robot name="scout_mini_gazebo_robot"
     xmlns:xacro="http://ros.org/wiki/xacro">
     
@@ -10,4 +12,21 @@
     <xacro:VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="false">
         <origin xyz="0 0 0.4" rpy="0 0 0" />
     </xacro:VLP-16>
+
+    <gazebo>
+        <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
+            <robotNamespace>/</robotNamespace>
+            <updateRate>30</updateRate>
+            <bodyName>base_link</bodyName>
+            <frameId>base_link</frameId>
+            <topicName>gps/fix</topicName>
+            <velocityTopicName>gps/vel</velocityTopicName>
+            <referenceLatitude>0.0</referenceLatitude>
+            <referenceLongitude>0.0</referenceLongitude>
+            <referenceHeading>0</referenceHeading>
+            <referenceAltitude>0</referenceAltitude>
+            <drift>0.0001 0.0001 0.0001</drift>
+        </plugin>
+    </gazebo>
+
 </robot>
