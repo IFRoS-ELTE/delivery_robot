@@ -35,18 +35,18 @@ git clone https://github.com/autolaborcenter/rviz_navi_multi_goals_pub_plugin.gi
 
 Error : Could not find a package configuration file provided by "tf2_sensor_msgs"
 ```
-Solution:$ cd /catkin_ws/src 
-         $ git clone https://github.com/ros/geometry2.git
-         $ cd catkin_ws 
-         $ catkin_make 
+$ cd /catkin_ws/src 
+$ git clone https://github.com/ros/geometry2.git
+$ cd catkin_ws 
+$ catkin_make 
 ```
 Error : 'velocity_controllers/JointVelocityController' does not exist. 
 ``` 
-Required pkg: $ sudo apt-get install ros-noetic-ros-control ros-noetic-ros-controllers
+$ sudo apt-get install ros-noetic-ros-control ros-noetic-ros-controllers
 ```
 Error: No module named "rospkg"
 ```
-required pkg: $ pip install -U rospkg
+$ pip install -U rospkg
 
 ```
 ### navigation_4wd.launch (Errors and pkgs): 
