@@ -31,6 +31,50 @@ git clone https://github.com/Umar-Senpai/pointcloud_to_laserscan.git
 ```
 git clone https://github.com/autolaborcenter/rviz_navi_multi_goals_pub_plugin.git
 ```
+## Errors & External Packages need to be added:
+
+Error : Could not find a package configuration file provided by "tf2_sensor_msgs"
+```
+$ cd /catkin_ws/src 
+$ git clone https://github.com/ros/geometry2.git
+$ cd catkin_ws 
+$ catkin_make 
+```
+Error : 'velocity_controllers/JointVelocityController' does not exist. 
+``` 
+$ sudo apt-get install ros-noetic-ros-control ros-noetic-ros-controllers
+```
+Error: No module named "rospkg"
+```
+$ pip install -U rospkg
+
+```
+### navigation_4wd.launch (Errors and pkgs): 
+
+Error: yocs_velocity_smoother (Resource not found) 
+```
+$ cd catkin_ws/src
+$ git clone https://github.com/Umar-Senpai/yujin_ocs.git
+$ sudo apt install ros-noetic-ecl-threads
+$ cd catkin_ws 
+$ catkin_make
+```
+Error: missing packages: (move-base, map-server, amcl,dwa-Local-planner, global-planner)
+```
+$ sudo apt install ros-noetic-move-base
+$ sudo apt install ros-noetic-map-server
+$ sudo apt install ros-noetic-amcl
+$ sudo apt install ros-noetic-dwa-local-planner
+$ sudo apt install ros-noetic-global-planner
+```
+make sure to build and source 
+
+### scout_v2_octomap (missing pkgs):
+Error: missing pakage: gmapping, octomap-server
+```
+$ sudo apt install ros-noetic-octomap-server
+$ sudo apt install ros-noetic-gmapping
+```
 
 ## Usage
 Spawn the scout_mini in a gazebo world first:
