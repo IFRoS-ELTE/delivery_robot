@@ -31,6 +31,24 @@ git clone https://github.com/Umar-Senpai/pointcloud_to_laserscan.git
 ```
 git clone https://github.com/autolaborcenter/rviz_navi_multi_goals_pub_plugin.git
 ```
+### Errors & External Packages need to be added:
+
+Error : Could not find a package configuration file provided by "tf2_sensor_msgs"
+```
+Solution:$ cd /catkin_ws/src 
+         $ git clone https://github.com/ros/geometry2.git
+         $ cd catkin_ws 
+         $ catkin_make 
+```
+Error : 'velocity_controllers/JointVelocityController' does not exist. 
+``` 
+Required pkg: $ sudo apt-get install ros-noetic-ros-control ros-noetic-ros-controllers
+```
+Error: No module named "rospkg"
+```
+required pkg: $ pip install -U rospkg
+
+```
 
 ## Usage
 Spawn the scout_mini in a gazebo world first:
