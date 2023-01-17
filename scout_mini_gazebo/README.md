@@ -31,6 +31,12 @@ git clone https://github.com/Umar-Senpai/pointcloud_to_laserscan.git
 ```
 git clone https://github.com/autolaborcenter/rviz_navi_multi_goals_pub_plugin.git
 ```
+
+### GPS
+```
+sudo apt install ros-noetic-hector-gazebo-plugins
+```
+
 ## Errors & External Packages need to be added:
 
 Error : Could not find a package configuration file provided by "tf2_sensor_msgs"
