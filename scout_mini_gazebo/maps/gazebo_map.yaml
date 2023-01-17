@@ -1,4 +1,4 @@
-image: /home/umar/scout_ws/src/ugv_gazebo_sim/scout/scout_description/maps/gazebo_map.pgm
+image: gazebo_map.pgm
 resolution: 0.050000
 origin: [-100.000000, -100.000000, 0.000000]
 negate: 0
