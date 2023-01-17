@@ -59,7 +59,7 @@ $ sudo apt install ros-noetic-ecl-threads
 $ cd catkin_ws 
 $ catkin_make
 ```
-Error: missing packages: (movebase-mapserver-amcl-dwaLocalplanner-globalplanner)
+Error: missing packages: (move-base, map-server, amcl,dwa-Local-planner, global-planner)
 ```
 $ sudo apt install ros-noetic-move-base
 $ sudo apt install ros-noetic-map-server
@@ -70,6 +70,7 @@ $ sudo apt install ros-noetic-global-planner
 make sure to build and source 
 
 ### scout_v2_octomap (missing pkgs):
+Error: missing pakage: gmapping, octomap-server
 ```
 $ sudo apt install ros-noetic-octomap-server
 $ sudo apt install ros-noetic-gmapping
