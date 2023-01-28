@@ -19,14 +19,25 @@
             <updateRate>30</updateRate>
             <bodyName>base_link</bodyName>
             <frameId>base_link</frameId>
-            <topicName>gps/fix</topicName>
+            <topicName>navsat/fix</topicName>
             <velocityTopicName>gps/vel</velocityTopicName>
-            <referenceLatitude>0.0</referenceLatitude>
-            <referenceLongitude>0.0</referenceLongitude>
+            <referenceLatitude>40.0</referenceLatitude>
+            <referenceLongitude>50.0</referenceLongitude>
             <referenceHeading>0</referenceHeading>
             <referenceAltitude>0</referenceAltitude>
             <drift>0.0001 0.0001 0.0001</drift>
         </plugin>
     </gazebo>
+
+    <gazebo>
+    <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+      <alwaysOn>true</alwaysOn>
+      <bodyName>base_link</bodyName>
+      <topicName>imu/data</topicName>
+      <serviceName>imu_service</serviceName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <updateRate>20.0</updateRate>
+    </plugin>
+  </gazebo>
 
 </robot>

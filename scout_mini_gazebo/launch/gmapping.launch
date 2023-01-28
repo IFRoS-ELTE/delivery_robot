@@ -25,27 +25,48 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 -->
 <launch>
 
-    <arg name="robot_namespace" default="/"/>
-    <!-- <arg name="world_name" default="$(find scout_gazebo_sim)/worlds/clearpath_playpen.world"/> -->
-    <arg name="world_name" default="$(find scout_mini_gazebo)/worlds/small_city.world"/>
+    <!-- 2D Octomap -->
+    <node pkg="gmapping" type="slam_gmapping" name="simple_gmapping" output="screen"> 
+      <rosparam>
+          odom_frame: odom
+          base_frame: base_link
+          map_frame: map
 
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(arg world_name)"/>
-    </include>
+          map_update_interval: 0.5 #0.5 # Publish new map
 
-    <!-- <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" 
-     args="0.0 0.0 0.0 0.0 0.0 0.0 base_link velodyne 100"/> -->
-    <include file="$(find scout_mini_gazebo)/launch/spawn_scout_mini.launch">
-        <arg name="paused" value="false"/>
-        <arg name="use_sim_time" value="true"/>
-        <arg name="gui" value="true"/>
-        <arg name="headless" value="false"/>
-        <arg name="debug" value="false"/>
-    </include>
+          maxUrange: 10.0 #19.9 #5.5 # Should be just less than sensor range
+          maxRange: 10.1 #20 #6.1 # Should be just greater than sensor range
+          particles: 100 # Increased from 80
 
-    <node name="odom_pub" pkg="scout_mini_gazebo" type="odom.py" output="screen"/>
+          # Update frequencies
+          linearUpdate: 0.3
+          angularUpdate: 0.5 #0.2 #0.5
+          temporalUpdate: 2.0 #1.0 #2.0
+          resampleThreshold: 0.5
 
-    <include file="$(find pointcloud_to_laserscan)/launch/point_to_scan.launch">
-    </include>
-    
+          # Initial Map Size
+          xmin: -100.0
+          ymin: -100.0
+          xmax: 100.0
+          ymax: 100.0
+          delta: 0.05
+
+          # All default
+          sigma: 0.05
+          kernelSize: 1
+          lstep: 0.05
+          astep: 0.05
+          iterations: 5
+          lsigma: 0.075
+          ogain: 3.0
+          lskip: 0
+          llsamplerange: 0.01
+          llsamplestep: 0.01
+          lasamplerange: 0.005
+          lasamplestep: 0.005
+
+        </rosparam>
+    </node>
+        
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find scout_description)/rviz/model_display.rviz" /> -->
 </launch>

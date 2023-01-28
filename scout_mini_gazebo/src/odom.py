@@ -35,6 +35,7 @@ while not rospy.is_shutdown():
     
     header.stamp = rospy.Time.now() 
     odom.header = header 
+    odom.child_frame_id = "base_link"
     
     # print(odom.pose.pose.position.x)
     

@@ -24,28 +24,16 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCL
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <launch>
-
-    <arg name="robot_namespace" default="/"/>
-    <!-- <arg name="world_name" default="$(find scout_gazebo_sim)/worlds/clearpath_playpen.world"/> -->
-    <arg name="world_name" default="$(find scout_mini_gazebo)/worlds/small_city.world"/>
-
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(arg world_name)"/>
-    </include>
-
-    <!-- <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" 
-     args="0.0 0.0 0.0 0.0 0.0 0.0 base_link velodyne 100"/> -->
-    <include file="$(find scout_mini_gazebo)/launch/spawn_scout_mini.launch">
-        <arg name="paused" value="false"/>
-        <arg name="use_sim_time" value="true"/>
-        <arg name="gui" value="true"/>
-        <arg name="headless" value="false"/>
-        <arg name="debug" value="false"/>
-    </include>
-
-    <node name="odom_pub" pkg="scout_mini_gazebo" type="odom.py" output="screen"/>
-
-    <include file="$(find pointcloud_to_laserscan)/launch/point_to_scan.launch">
-    </include>
-    
+    <env name="LIBGL_ALWAYS_SOFTWARE" value="true" />
+    <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
+      <param name="resolution" value="0.05" />
+      <param name="frame_id" type="string" value="map" />
+      <param name="sensor_model/max_range" value="6" />
+      <param name="latch" value="false" />
+      <!-- <param name="occupancy_min_z" value="0.05" />
+      <param name="occupancy_max_z" value="0.5" /> -->
+      <remap from="cloud_in" to="/laserscan_to_pointcloud/converted_pc" />
+      <remap from="projected_map" to="/map" />
+    </node>
+    <node name="nav_rviz" pkg="rviz" type="rviz" args="-d $(find scout_mini_gazebo)/rviz/rviz_nav.rviz" />
 </launch>

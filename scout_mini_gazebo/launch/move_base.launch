@@ -1,0 +1,20 @@
+<?xml version="1"?>
+<launch>
+
+        <!--  ************** Navigation ***************  -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find scout_mini_gazebo)/param/4wd/costmap_common_params.yaml" command="load" ns="global_costmap" />
+
+    <rosparam file="$(find scout_mini_gazebo)/param/4wd/costmap_common_params.yaml" command="load" ns="local_costmap" />
+
+    <rosparam file="$(find scout_mini_gazebo)/param/4wd/local_costmap_params.yaml" command="load" />
+
+    <rosparam file="$(find scout_mini_gazebo)/param/4wd/global_costmap_params.yaml" command="load" />
+
+    <rosparam file="$(find scout_mini_gazebo)/param/4wd/base_local_planner_params.yaml" command="load" />
+
+    <rosparam file="$(find scout_mini_gazebo)/param/4wd/move_base_params.yaml" command="load" />
+
+    <!-- <remap from="odom" to="/outdoor_waypoint_nav/odometry/filtered_map" /> -->
+  </node>
+</launch>
