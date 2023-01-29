@@ -3,6 +3,18 @@ This project will contain the ROS packages necessary to run the project.
 
 We have built a gazebo simulation with the packages provided with the real scout robots. This will enable us to do the same things (exporting maps, navigation with RVIZ etc.) in gazebo as we did with the real robots. Follow the instructions inside `scout_mini_gazebo` package for testing.
 
+## Port real robot packages to Gazebo
+The first thing we tried to do is port all the packages from the real robot to the gazebo so we can easily do everything in simulation first. Using the `scout_mini_gazebo` package, you can do all the things, i.e. generated and save maps and navigation on the saved maps on Gazebo now. For example to run the navigation, launch the following two nodes:
+
+```
+roslaunch scout_mini_gazebo scout_v2_minimal.launch
+roslaunch scout_mini_gazebo navigation_4wd.launch
+```
+
+You can now add the 2d Nav Goal points through RVIZ and the robot will follow it. We have also saved a map of gazebo playpen enviornment to make the testing easier. A demo is shown:
+
+<img width="1157" alt="image" src="https://user-images.githubusercontent.com/31202659/215353318-edab9a1b-3876-4093-bd7e-61771f72a6de.png">
+
 ## To Run the Navigation:
 
 ### Simulation
