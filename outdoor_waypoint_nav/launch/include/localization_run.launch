@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<launch>
+
+  <group ns="/outdoor_waypoint_nav"> 
+  <rosparam command="load" file="$(find outdoor_waypoint_nav)/params/ekf_params.yaml" />
+  <!-- <rosparam command="load" file="$(find outdoor_waypoint_nav)/params/navsat_params.yaml" /> -->
+  
+  <!-- <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom" clear_params="true"/>
+
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
+    <remap from="odometry/filtered" to="odometry/filtered_map"/>
+  </node> -->
+
+  <node pkg="outdoor_waypoint_nav" type="gps_to_marker.py" name="gps_to_marker" output="screen" >
+		<param name="coordinates_file" value="$(find outdoor_waypoint_nav)/waypoint_files/points_outdoor.txt" type="string" />
+  </node>
+
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" clear_params="true" output="screen">
+      <param name="magnetic_declination_radians" value="0"/>
+      <param name="yaw_offset" value="0"/>
+      <param name="zero_altitude" value="true"/>
+      <param name="broadcast_cartesian_transform" value="true"/>
+      <param name="broadcast_cartesian_transform_as_parent_frame_" value="true"/>
+      <param name="cartesian_frame_id" value="utm"/>
+      <param name="publish_filtered_gps" value="true"/>
+      <param name="use_odometry_yaw" value="false"/>
+      <param name="wait_for_datum" value="false"/>
+      <!-- <param name="predict_to_current_time" value="true"/> -->
+
+      <remap from="odometry/filtered" to="/odom"/>
+      <!-- <remap from="gps/fix" to="/navsat/fix"/> -->
+      <remap from="gps/fix" to="/gnss"/>
+      <remap from="imu/data" to="/imu/data"/>
+  </node>
+  </group>
+
+</launch>

@@ -7,6 +7,7 @@ from std_msgs.msg import Header
 from nav_msgs.msg import Odometry
 
 from geometry_msgs.msg import Point, Pose, Quaternion, Twist, Vector3
+from visualization_msgs.msg import Marker, MarkerArray
 
 import tf
 
@@ -26,11 +27,14 @@ class scout:
         self.vx=0.0
         self.vy=0.0
         self.vth = 0.0
+        self.markerArray = MarkerArray()
 
         self.GPS_odom_pub = rospy.Publisher('GPS_odom', Odometry, queue_size=10)
         odom_broadcaster = tf.TransformBroadcaster()
-        self.odom_quat = tf.transformations.quaternion_from_euler(0, 0, self.th)
-        sub = rospy.Subscriber('/gps/fix',NavSatFix,self.callback,queue_size=100)
+        self.odom_quat = tf.transformations.quaternion_from_euler(0.0, 0.0, self.th)
+        sub = rospy.Subscriber('/gnss',NavSatFix,self.callback,queue_size=100)
+        self.marker_pub     = rospy.Publisher('gps_markers', MarkerArray, queue_size=1)
+        self.marker_id = 1
 
         
         pass
@@ -62,12 +66,12 @@ class scout:
         if self.init_pos_x !=None and self.init_pos_y != None:
             dt = (self.current_time - self.last_time).to_sec()
             print("time diff", dt)
-            self.vx = (self.resultX- self.init_pos_x - self.x )/dt
-            self.vy = (self.resultY- self.init_pos_y - self.y )/dt
-            if self.vx<0.05 and self.vx>-0.05: 
-                self.vx=0.0
-            if self.vy<0.05 and self.vy>-0.05: 
-                self.vy=0.0
+            # self.vx = (self.resultX- self.init_pos_x - self.x )/dt
+            # self.vy = (self.resultY- self.init_pos_y - self.y )/dt
+            # if self.vx<0.05 and self.vx>-0.05: 
+            #     self.vx=0.0
+            # if self.vy<0.05 and self.vy>-0.05: 
+            #     self.vy=0.0
 
             self.x = self.resultX- self.init_pos_x 
             self.y = self.resultY- self.init_pos_y
@@ -93,7 +97,7 @@ class scout:
         odom.header.frame_id = "odom"
 
         # set the position 
-        odom.pose.pose = Pose(Point(-self.x, self.y, 0.), Quaternion(*self.odom_quat))
+        odom.pose.pose = Pose(Point(-self.y, self.x, 0.), Quaternion(*self.odom_quat))
 
         # set the velocity
         odom.child_frame_id = "base_link"
