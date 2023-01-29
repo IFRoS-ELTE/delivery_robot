@@ -1,9 +1,6 @@
 #!/usr/bin/python3
 # -- coding: utf-8 --
 
-# Hands-on Perception Project
-# Object detection project.  
-# Authors: Umar Muhammad - Nafess Bin Zaman - Ivan Changoluisa
 import rospy 
 import cv2
 
